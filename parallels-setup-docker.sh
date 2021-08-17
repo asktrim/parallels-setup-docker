@@ -1,11 +1,13 @@
 #!/bin/bash
 
+echo
+echo
 echo "Please enter your macOS username (you can get this by typing whoami in the macOS terminal):"
 read username
-
+echo
 echo "Please enter your projects folder name in macOS (case matters):"
 read projects_dir
-
+echo
 localpath=/media/psf/$projects_dir
 
 if [ ! -d "$localpath" ]
@@ -25,7 +27,7 @@ apt upgrade -y
 apt install -y docker htop iotop jq
 
 sed -i 's/^ExecStart.*$/ExecStart=\/usr\/bin\/dockerd -H fd:\/\/ -H tcp:\/\/0.0.0.0 --containerd=\/run\/containerd\/containerd.sock/' /lib/systemd/system/docker.service
-
+echo
 while true; do
     read -p "Do you wish to disable the desktop to make more memory available to Docker?" yn
     case $yn in
