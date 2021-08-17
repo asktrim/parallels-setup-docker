@@ -23,13 +23,12 @@ hostname docker
 echo 'docker' > /etc/hostname
 
 apt update -y
-apt upgrade -y
 apt install -y docker.io htop iotop jq curl
 
 sed -i 's/^ExecStart.*$/ExecStart=\/usr\/bin\/dockerd -H fd:\/\/ -H tcp:\/\/0.0.0.0 --containerd=\/run\/containerd\/containerd.sock/' /lib/systemd/system/docker.service
 echo
 while true; do
-    read -p "Do you wish to disable the desktop to make more memory available to Docker?" yn
+    read -p "Do you wish to disable the desktop to make more memory available to Docker? [y/n] " yn
     case $yn in
         [Yy]* )
           systemctl disable wpa_supplicant ModemManager
@@ -40,7 +39,9 @@ while true; do
     esac
 done
 
+echo
 echo "All set!"
 echo "In order to use this virtual machine for docker from macOS, you will need to add to your shell profile:"
 echo "  export DOCKER_HOST=tcp://docker.local:2375"
 echo "You should reboot the virtual machine now!"
+echo
