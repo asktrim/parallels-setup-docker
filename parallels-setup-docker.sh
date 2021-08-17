@@ -24,7 +24,7 @@ echo 'docker' > /etc/hostname
 
 apt update -y
 apt upgrade -y
-apt install -y docker htop iotop jq
+apt install -y docker.io htop iotop jq curl
 
 sed -i 's/^ExecStart.*$/ExecStart=\/usr\/bin\/dockerd -H fd:\/\/ -H tcp:\/\/0.0.0.0 --containerd=\/run\/containerd\/containerd.sock/' /lib/systemd/system/docker.service
 echo
