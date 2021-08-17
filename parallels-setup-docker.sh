@@ -20,7 +20,7 @@ ln -s $localpath /Users/$username/$projects_dir
 hostname docker
 echo 'docker' > /etc/hostname
 
-apt update
+apt update -y
 apt upgrade -y
 apt install -y docker htop iotop jq
 
