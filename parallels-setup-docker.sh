@@ -27,10 +27,11 @@ apt install -y htop iotop jq curl
 
 sh -c "$(curl -fsSL https://get.docker.com)"
 
-mkdir -p /etc/systemd/system/docker.d
-cat <<EOT >> /etc/systemd/system/docker.d/override.conf
+mkdir -p /etc/systemd/system/docker.service.d
+cat <<EOT >> /etc/systemd/system/docker.service.d/override.conf
 [Service]
-ExecStart=/usr/sbin/dockerd -H fd:// -H tcp://0.0.0.0 --containerd=/run/containerd/containerd.sock
+ExecStart=
+ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0 --containerd=/run/containerd/containerd.sock
 EOT
 
 echo
