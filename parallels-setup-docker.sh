@@ -39,8 +39,8 @@ while true; do
     read -p "Do you wish to disable the desktop to make more memory available to Docker? [y/n] " yn
     case $yn in
         [Yy]* )
-          systemctl disable wpa_supplicant ModemManager
           systemctl set-default multi-user.target
+          systemctl disable wpa_supplicant ModemManager
           break;;
         [Nn]* ) break;;
         * ) echo "Please answer yes or no.";;
