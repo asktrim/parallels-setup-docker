@@ -23,9 +23,16 @@ hostname docker
 echo 'docker' > /etc/hostname
 
 apt update -y
-apt install -y docker.io htop iotop jq curl
+apt install -y htop iotop jq curl
 
-sed -i 's/^ExecStart.*$/ExecStart=\/usr\/sbin\/dockerd -H fd:\/\/ -H tcp:\/\/0.0.0.0 --containerd=\/run\/containerd\/containerd.sock/' /lib/systemd/system/docker.service
+sh -c "curl -fsSL https://get.docker.com"
+
+mkdir -p /etc/systemd/system/docker.d
+cat <<EOT >> /etc/systemd/system/docker.d/override.conf
+[Service]
+ExecStart=/usr/sbin/dockerd -H fd:// -H tcp://0.0.0.0 --containerd=/run/containerd/containerd.sock
+EOT
+
 echo
 while true; do
     read -p "Do you wish to disable the desktop to make more memory available to Docker? [y/n] " yn
