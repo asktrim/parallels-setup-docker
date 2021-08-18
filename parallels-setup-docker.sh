@@ -25,7 +25,7 @@ echo 'docker' > /etc/hostname
 apt update -y
 apt install -y htop iotop jq curl
 
-sh -c "curl -fsSL https://get.docker.com"
+sh -c "$(curl -fsSL https://get.docker.com)"
 
 mkdir -p /etc/systemd/system/docker.d
 cat <<EOT >> /etc/systemd/system/docker.d/override.conf
