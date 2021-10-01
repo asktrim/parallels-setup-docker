@@ -34,6 +34,9 @@ ExecStart=
 ExecStart=/usr/bin/dockerd -H fd:// -H tcp://0.0.0.0 --containerd=/run/containerd/containerd.sock
 EOT
 
+# prevent avahi from confusing itself and changing the .local hostname
+sed -i 's/^#allow-interfaces=$/allow-interfaces=eth0/' /etc/avahi/avahi-daemon.conf
+
 echo
 while true; do
     read -p "Do you wish to disable the desktop to make more memory available to Docker? [y/n] " yn
