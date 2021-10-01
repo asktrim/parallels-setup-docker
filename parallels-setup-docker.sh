@@ -37,6 +37,9 @@ EOT
 # prevent avahi from confusing itself and changing the .local hostname
 sed -i 's/^#allow-interfaces=$/allow-interfaces=eth0/' /etc/avahi/avahi-daemon.conf
 
+# disable the memory ballooning plugin so parallels doesn't steal memory
+echo "blacklist virtio_balloon" > /etc/modprobe.d/balloon.conf
+
 echo
 while true; do
     read -p "Do you wish to disable the desktop to make more memory available to Docker? [y/n] " yn
