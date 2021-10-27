@@ -36,6 +36,7 @@ EOT
 
 # prevent avahi from confusing itself and changing the .local hostname
 sed -i 's/^#allow-interfaces=$/allow-interfaces=eth0/' /etc/avahi/avahi-daemon.conf
+sed -i 's/^use-ipv6=yes$/use-ipv6=no/' /etc/avahi/avahi-daemon.conf
 
 # disable the memory ballooning plugin so parallels doesn't steal memory
 echo "blacklist virtio_balloon" > /etc/modprobe.d/balloon.conf
