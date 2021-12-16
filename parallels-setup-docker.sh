@@ -19,9 +19,6 @@ fi
 mkdir -p /Users/$username
 ln -s $localpath /Users/$username/$projects_dir
 
-hostname docker
-echo 'docker' > /etc/hostname
-
 apt update -y
 apt install -y htop iotop jq curl
 
@@ -41,6 +38,10 @@ sed -i 's/^use-ipv6=yes$/use-ipv6=no/' /etc/avahi/avahi-daemon.conf
 # disable the memory ballooning plugin so parallels doesn't steal memory
 echo "blacklist virtio_balloon" > /etc/modprobe.d/balloon.conf
 
+# disable ipv6 because we can't rely on it being setup correctly
+echo "net.ipv6.conf.all.disable_ipv6 = 1" > /etc/sysctl.d/70-disable-ipv6.conf
+sysctl -p -f /etc/sysctl.d/70-disable-ipv6.conf
+
 echo
 while true; do
     read -p "Do you wish to disable the desktop to make more memory available to Docker? [y/n] " yn
@@ -57,6 +58,6 @@ done
 echo
 echo "All set!"
 echo "In order to use this virtual machine for docker from macOS, you will need to add to your shell profile:"
-echo "  export DOCKER_HOST=tcp://docker.local:2375"
+echo "  export DOCKER_HOST=tcp://$(hostname):2375"
 echo "You should reboot the virtual machine now!"
 echo
